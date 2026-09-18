@@ -1,0 +1,39 @@
+#include "Enemy.h"
+#include "Engine/Model.h"
+
+Enemy::Enemy(GameObject* parent)
+	: GameObject(parent, "Enemy"), hModel_(-1), isDead_(false)
+{
+}
+
+Enemy::~Enemy()
+{
+}
+
+void Enemy::Initialize()
+{
+	hModel_ = Model::Load("Oden.fbx");
+	assert(hModel_ >= 0);
+	transform_.position_ = { 0.0f, 0.0f, 10.0f };
+	transform_.scale_ = { 0.5f, 0.5f, 0.5f };
+	transform_.rotate_ = { 0.0f, 0.0f, 0.0f };
+}
+
+void Enemy::Update()
+{
+	static float time = 0.0f;
+	time += 0.025f;
+	float posx = 6.0 * sin(0.2f * time);
+	transform_.position_.x = posx;
+}
+
+void Enemy::Draw()
+{
+	Model::SetTransform(hModel_, transform_);
+	Model::Draw(hModel_);
+}
+
+void Enemy::Release()
+{
+	
+}
